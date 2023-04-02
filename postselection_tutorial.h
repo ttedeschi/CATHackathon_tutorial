@@ -35,7 +35,6 @@ const float PT_CUT_MU=  30;
 const float ETA_CUT_MU= 2.4;
 const float ISO_CUT_MU= 0.15;
 
-//const size_t PT_CUT_ELE=  35;
 const float PT_CUT_ELE_UL2016=  30;
 const float PT_CUT_ELE_UL2017=  38;
 const float PT_CUT_ELE_UL2018=  35;
@@ -52,8 +51,6 @@ const float PT_CUT_LEP_VETO_MU=         10;
 const float ETA_CUT_LEP_VETO_MU=        2.4;
 
 const float DR_OVERLAP_CONE_TAU=        0.5;
-//const float DR_OVERLAP_CONE_TAU=        0.2;
-
 const float DR_OVERLAP_CONE_OTHER=      0.4;
 
 const float PT_CUT_JET= 30;
@@ -129,29 +126,6 @@ TH1F * TauES_dm_DeepTau2017v2p1VSjet_UL2017_ptgt100_hist_high = (TH1F *) TauES_d
 
 TFile *TauFES_eta_dm_DeepTau2017v2p1VSe_UL2017 = TFile::Open(TString(remote_storage) + TString("data/tauSF/TauFES_eta-dm_") + TString("DeepTau2017v2p1VSe") + TString("_") + TString("2017")  + TString("ReReco") + TString(".root"));
 TGraphAsymmErrors * TauFES_eta_dm_DeepTau2017v2p1VSe_UL2017_graph = (TGraphAsymmErrors *) TauFES_eta_dm_DeepTau2017v2p1VSe_UL2017->Get("fes");
-
-TFile *Btag_eff_UL2017 = TFile::Open(TString(remote_storage) + TString("Btag_eff_") + TString("UL2017") + TString(".root"));
-TEfficiency *eff_b = (TEfficiency *) Btag_eff_UL2017->Get("h2_BTaggingEff_b");
-TH2F *Btag_eff_UL2017_h_b = (TH2F *) eff_b->CreateHistogram();
-TEfficiency *eff_c = (TEfficiency *) Btag_eff_UL2017->Get("h2_BTaggingEff_c");
-TH2F *Btag_eff_UL2017_h_c = (TH2F *) eff_c->CreateHistogram();
-TEfficiency *eff_udsg = (TEfficiency *) Btag_eff_UL2017->Get("h2_BTaggingEff_udsg");
-TH2F *Btag_eff_UL2017_h_udsg = (TH2F *) eff_udsg->CreateHistogram();
-
-TFile *FR_vsjet2_vsmuT_ZZ = TFile::Open(TString(remote_storage) + TString("FR_vsjet2_UL2017.root"));
-TH2F *FR_vsjet2_vsmuT_ZZ_histo_ele = (TH2F*)FR_vsjet2_vsmuT_ZZ->Get("FakeRatio_Electron");
-TH2F *FR_vsjet2_vsmuT_ZZ_histo_mu = (TH2F*)FR_vsjet2_vsmuT_ZZ->Get("FakeRatio_Muon");
-TH2F *FR_vsjet2_vsmuT_ZZ_histo_tau = (TH2F*)FR_vsjet2_vsmuT_ZZ->Get("FakeRatio_Tau");
-                                        
-TFile *FR_vsjet4_vsmuT_ZZ = TFile::Open(TString(remote_storage) + TString("FR_vsjet4_UL2017.root"));
-TH2F *FR_vsjet4_vsmuT_ZZ_histo_ele = (TH2F*)FR_vsjet4_vsmuT_ZZ->Get("FakeRatio_Electron");
-TH2F *FR_vsjet4_vsmuT_ZZ_histo_mu = (TH2F*)FR_vsjet4_vsmuT_ZZ->Get("FakeRatio_Muon");
-TH2F *FR_vsjet4_vsmuT_ZZ_histo_tau = (TH2F*)FR_vsjet4_vsmuT_ZZ->Get("FakeRatio_Tau");
-
-TFile *FR_vsjet8_vsmuT_ZZ = TFile::Open(TString(remote_storage) + TString("FR_vsjet8_UL2017.root"));
-TH2F *FR_vsjet8_vsmuT_ZZ_histo_ele = (TH2F*)FR_vsjet8_vsmuT_ZZ->Get("FakeRatio_Electron");
-TH2F *FR_vsjet8_vsmuT_ZZ_histo_mu = (TH2F*)FR_vsjet8_vsmuT_ZZ->Get("FakeRatio_Muon");
-TH2F *FR_vsjet8_vsmuT_ZZ_histo_tau = (TH2F*)FR_vsjet8_vsmuT_ZZ->Get("FakeRatio_Tau");
 
 float deltaPhi (float phi1, float phi2){
     float dphi = (phi1-phi2);
@@ -287,14 +261,6 @@ float GetSubLeading(rvec_f Jet_pt, rvec_i VBSJet_idx){
 float GetLepton(rvec_f Electron_pt, rvec_i Electron_idx, rvec_f Muon_pt, rvec_i Muon_idx, int GoodLeptonFamily){
     if (GoodLeptonFamily == 0) return Electron_pt[Electron_idx[0]];
     else return Muon_pt[Muon_idx[0]];
-}
-
-float GetLeptonSF(rvec_f Electron_pt, rvec_i Electron_idx, rvec_f Muon_pt, rvec_i Muon_idx, int GoodLeptonFamily, bool IsMC){
-    if (IsMC == false) return 1;
-    else {
-        if (GoodLeptonFamily == 0) return Electron_pt[Electron_idx[0]];
-        else return Muon_pt[Muon_idx[0]];
-    }
 }
 
 int GetLeptonTightFlag(rvec_i Electron_idx, rvec_i Muon_idx, int GoodLeptonFamily){
@@ -643,310 +609,6 @@ float GetLog2(float x){
     else return 0;
 }
 
-float deltaTheta(float pt1, float eta1, float phi1, float mass1, float pt2, float eta2, float phi2, float mass2){
-    ROOT::Math::PtEtaPhiMVector p1(pt1, eta1, phi1, mass1);
-    ROOT::Math::PtEtaPhiMVector p2(pt2, eta2, phi2, mass2);
-    return cos((p1 - p2).Theta());
-}
-
-float Zeppenfeld(float lep_eta, float ljet_eta, float sljet_eta){
-    float zepp_lepjj = lep_eta - 0.5*(ljet_eta+sljet_eta);
-    return zepp_lepjj;
-}
-
-float M1T(float Lepton_pt, float Lepton_eta, float Lepton_phi, float Lepton_mass, float SelectedTau_pt, float SelectedTau_eta, float SelectedTau_phi, float SelectedTau_mass, float MET_pt, float MET_phi){
-    ROOT::Math::PtEtaPhiMVector lep_p4(Lepton_pt, Lepton_eta, Lepton_phi, Lepton_mass);
-    ROOT::Math::PtEtaPhiMVector tau_p4(SelectedTau_pt, SelectedTau_eta, SelectedTau_phi, SelectedTau_mass); //*taucorr
-    auto leptau_p4 = lep_p4 + tau_p4;
-    auto leptau_pt2 = leptau_p4.Perp2();
-    auto leptau_px = leptau_p4.Px();
-    auto leptau_py = leptau_p4.Py();
-    auto leptau_mass2 = leptau_p4.M2();
-    auto leptau_et = sqrt(leptau_mass2 + leptau_pt2);
-    auto MET_px = MET_pt*cos(MET_phi);
-    auto MET_py = MET_pt*sin(MET_phi);
-    auto sys_et2 = pow(leptau_et + MET_pt,2.);
-    auto sys_pt2 = pow(leptau_px + MET_px, 2.) + pow(leptau_py + MET_py, 2.);
-    auto M1T2 = sys_et2 - sys_pt2;
-    auto sign_M1T2 = M1T2/abs(M1T2);
-
-    return sign_M1T2*sqrt(sign_M1T2*M1T2);
-}
-
-float Mo1(float Lepton_pt, float Lepton_eta, float Lepton_phi, float Lepton_mass, float SelectedTau_pt, float SelectedTau_eta, float SelectedTau_phi, float SelectedTau_mass, float MET_pt, float MET_phi){
-    ROOT::Math::PtEtaPhiMVector lep_p4(Lepton_pt, Lepton_eta, Lepton_phi, Lepton_mass);
-    ROOT::Math::PtEtaPhiMVector tau_p4(SelectedTau_pt, SelectedTau_eta, SelectedTau_phi, SelectedTau_mass); //*taucorr
-    auto leptau_p4 = lep_p4 + tau_p4;
-    auto lep_pt = Lepton_pt;
-    auto tau_pt = SelectedTau_pt; //*taucorr
-    auto leptau_px = leptau_p4.Px();
-    auto leptau_py = leptau_p4.Py();
-    auto MET_px = MET_pt*cos(MET_phi);
-    auto MET_py = MET_pt*sin(MET_phi);
-    auto sys_eo2 = pow(lep_pt + tau_pt + MET_pt, 2.);
-    auto sys_pt2 = pow(leptau_px + MET_px, 2.) + pow(leptau_py + MET_py, 2.);
-    auto Mo12 = sys_eo2 - sys_pt2;
-    auto sign_Mo12 = Mo12/abs(Mo12);
-
-    return sign_Mo12*sqrt(sign_Mo12*Mo12);
-}
-
-
-float SFFakeRatio_lep_calc_vsjet2(float pT, float eta, int pdgId){
-    TH2F *histo;
-    if (abs(pdgId) == 11) histo = FR_vsjet2_vsmuT_ZZ_histo_ele;
-    else if (abs(pdgId) == 13) histo = FR_vsjet2_vsmuT_ZZ_histo_mu;
-
-    auto binx = histo->GetXaxis()->FindBin(pT);
-    auto biny = histo->GetYaxis()->FindBin(eta);
-    auto nxbins = histo->GetXaxis()->GetNbins();
-    auto nybins = histo->GetYaxis()->GetNbins();
-        
-    if(binx > nxbins) binx = nxbins;
-    else if (binx <= 0) binx = 1;
-    if (biny > nybins) biny = nybins;
-    else if (biny <= 0) biny = 1;
-
-    auto FR = histo->GetBinContent(binx, biny);
-
-    return FR/(1-FR);
-}
-        
-float SFFakeRatio_lep_calc_vsjet4(float pT, float eta, int pdgId){
-    TH2F *histo;
-    if (abs(pdgId) == 11) histo = FR_vsjet4_vsmuT_ZZ_histo_ele;
-    else if (abs(pdgId) == 13) histo = FR_vsjet4_vsmuT_ZZ_histo_mu;
-
-    auto binx = histo->GetXaxis()->FindBin(pT);
-    auto biny = histo->GetYaxis()->FindBin(eta);
-    auto nxbins = histo->GetXaxis()->GetNbins();
-    auto nybins = histo->GetYaxis()->GetNbins();
-        
-    if(binx > nxbins) binx = nxbins;
-    else if (binx <= 0) binx = 1;
-    if (biny > nybins) biny = nybins;
-    else if (biny <= 0) biny = 1;
-
-    auto FR = histo->GetBinContent(binx, biny);
-
-    return FR/(1-FR);
-}
-
-        
-float SFFakeRatio_tau_calc_vsjet2(float pT, float eta){
-    //TFile inFile("FR_vsjet2_vsmuT_ZZ.root"); 
-    //TFile *inFile = FR_vsjet2_vsmuT_ZZ;
-
-    //TH2F *histo = (TH2F*)inFile.Get("hFRDatataudif");
-    //TH2F *histo = (TH2F*)inFile->Get("hFRDatataudif");
-    
-    TH2F *histo = FR_vsjet2_vsmuT_ZZ_histo_tau;
-
-    auto binx = histo->GetXaxis()->FindBin(pT);
-    //auto biny = histo->GetYaxis()->FindBin(eta);
-    auto biny = histo->GetYaxis()->FindBin(abs(eta));
-    auto nxbins = histo->GetXaxis()->GetNbins();
-    auto nybins = histo->GetYaxis()->GetNbins();
-        
-    if(binx > nxbins) binx = nxbins;
-    else if (binx <= 0) binx = 1;
-    if (biny > nybins) biny = nybins;
-    else if (biny <= 0) biny = 1;
-
-    auto FR = histo->GetBinContent(binx, biny);
-
-    return FR/(1-FR);
-}
-        
-float SFFakeRatio_tau_calc_vsjet4(float pT, float eta){
-
-    //TFile inFile("FR_vsjet4_vsmuT_ZZ.root"); 
-    //TFile *inFile = FR_vsjet4_vsmuT_ZZ;
-
-    //TH2F *histo = (TH2F*)inFile.Get("hFRDatataudif");
-    //TH2F *histo = (TH2F*)inFile->Get("hFRDatataudif");
-    
-    TH2F *histo = FR_vsjet4_vsmuT_ZZ_histo_tau;
-
-    auto binx = histo->GetXaxis()->FindBin(pT);
-    //auto biny = histo->GetYaxis()->FindBin(eta);
-    auto biny = histo->GetYaxis()->FindBin(abs(eta));
-    auto nxbins = histo->GetXaxis()->GetNbins();
-    auto nybins = histo->GetYaxis()->GetNbins();
-        
-    if(binx > nxbins) binx = nxbins;
-    else if (binx <= 0) binx = 1;
-    if (biny > nybins) biny = nybins;
-    else if (biny <= 0) biny = 1;
-
-    auto FR = histo->GetBinContent(binx, biny);
-
-    return FR/(1-FR);
-}
-
-float GetEventSFFake(float lepton_SFFake, float tau_SFFake, int lepton_LnTRegion, int tau_LnTRegion){
-    if(lepton_LnTRegion==1 && tau_LnTRegion==0) return lepton_SFFake;
-    else if (lepton_LnTRegion==0 && tau_LnTRegion==1) return tau_SFFake;
-    else if (lepton_LnTRegion==1 && tau_LnTRegion==1) return lepton_SFFake*tau_SFFake;
-    else if (lepton_LnTRegion==0 && tau_LnTRegion==0) return 0.;
-}
-
-RVec<int> SelectVBSQGenJet(rvec_i GenPart_pdgId, rvec_i GenPart_genPartIdxMother, rvec_f GenPart_pt, rvec_f GenPart_eta, rvec_i GenJet_partonFlavour, rvec_f GenJet_pt, rvec_f GenJet_eta){
-
-    RVec<int> GenPart_idx;
-    
-    for (int i = 0; i < GenPart_pdgId.size(); i++) {
-        if(GenPart_genPartIdxMother[i]==0 && abs(GenPart_pdgId[i])>0 && abs(GenPart_pdgId[i])<10) GenPart_idx.emplace_back(i);
-    }
-    
-    RVec<int> dummy_idx;
-    dummy_idx.emplace_back(-9999);
-    dummy_idx.emplace_back(-9999);
-    
-    if (GenPart_idx.size() < 1) return dummy_idx;
-    
-    int GenPart_idx1 = GenPart_idx[0];
-    int GenPart_idx2 = GenPart_idx[1];
-    
-    if(GenPart_pt[GenPart_idx1] == GenPart_pt[GenPart_idx2] && GenPart_eta[GenPart_idx1] == GenPart_eta[GenPart_idx2]) return dummy_idx;
-    
-    int qflav1 = GenPart_pdgId[GenPart_idx1];
-    int qflav2 = GenPart_pdgId[GenPart_idx2];
-    
-    RVec<int> LightGenJet_idx;
-
-    for (int i = 0; i < GenJet_partonFlavour.size(); i++) {
-        if(abs(GenJet_partonFlavour[i])>0 && abs(GenJet_partonFlavour[i])<10 && (GenJet_partonFlavour[i]==qflav1 || GenJet_partonFlavour[i]==qflav2)) LightGenJet_idx.emplace_back(i);
-    }
-    
-    if(LightGenJet_idx.size() < 2){
-        LightGenJet_idx.clear();
-        for (int i = 0; i < GenJet_partonFlavour.size(); i++) {
-            if(abs(GenJet_partonFlavour[i])>0 && abs(GenJet_partonFlavour[i])<10) LightGenJet_idx.emplace_back(i);
-        }
-    }
-    
-    float discrim1 = 1000000.;
-    float discrim2 = 1000000.;
-    int idx_genjet1 = -1;
-    int idx_genjet2 = -1;
-    float tmpdiscr1;
-    float tmpdiscr2;
-           
-    for (int i = 0; i < LightGenJet_idx.size(); i++) {
-        tmpdiscr1 = abs(GenJet_eta[LightGenJet_idx[i]] -  GenPart_eta[GenPart_idx1]) + abs(GenJet_pt[LightGenJet_idx[i]] -  GenPart_pt[GenPart_idx1]);
-        tmpdiscr2 = abs(GenJet_eta[LightGenJet_idx[i]] -  GenPart_eta[GenPart_idx2]) + abs(GenJet_pt[LightGenJet_idx[i]] -  GenPart_pt[GenPart_idx2]);
-        if(tmpdiscr1 < discrim1){
-            discrim1 = tmpdiscr1;
-            idx_genjet1 = LightGenJet_idx[i];
-        }
-        if(tmpdiscr2 < discrim2){
-            discrim2 = tmpdiscr2;
-            idx_genjet2 = LightGenJet_idx[i];
-        }
-    }
-    
-    
-    if((idx_genjet1 == -1 || idx_genjet2 == -1) || (idx_genjet1 == idx_genjet2)) return dummy_idx;
-    
-    RVec<int> finalgenjets_idx(2);
-           
-    if(GenJet_pt[idx_genjet1] > GenJet_pt[idx_genjet2]){ 
-           finalgenjets_idx[0] = idx_genjet1;
-           finalgenjets_idx[1] = idx_genjet2;
-    }
-    else{ 
-           finalgenjets_idx[0] = idx_genjet2;
-           finalgenjets_idx[1] = idx_genjet1;
-    }
-    return finalgenjets_idx;
-}
-
-bool atleast2Jets(rvec_i GenJet_idx){
-    if(GenJet_idx.size() < 2) return false;
-    else return true;
-}
-
-int IsGenMatched(int i, int j){
-    if(i == j) return 1;
-    else return 0;
-}
-
-RVec<RVec<float>> getTauSF(float SelectedTau_pt, float SelectedTau_eta, int SelectedTau_genPartFlav, bool IsMC, string year){
-    RVec<float> vsJet, vsEle, vsMu;
-    if (IsMC == false){
-        vsJet.emplace_back(1.0);
-        vsJet.emplace_back(1.0);
-        vsJet.emplace_back(1.0);
-        vsEle.emplace_back(1.0);
-        vsEle.emplace_back(1.0);
-        vsEle.emplace_back(1.0);
-        vsMu.emplace_back(1.0);
-        vsMu.emplace_back(1.0);
-        vsMu.emplace_back(1.0);
-        
-        
-    }
-    
-    else{
-        string id;
-        id =  "DeepTau2017v2p1VSjet";
-        double_t pt = SelectedTau_pt;
-        if (SelectedTau_genPartFlav==5){
-            vsJet.emplace_back(TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017_h_down->Eval(pt));
-            vsJet.emplace_back(TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017_h_cent->Eval(pt));
-            vsJet.emplace_back(TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017_h_up->Eval(pt));
-        }
-        else{
-            vsJet.emplace_back(1.0);
-            vsJet.emplace_back(1.0);
-            vsJet.emplace_back(1.0);
-        }
-
-        int bin;
-        float sf, err;
-        float eta = abs(SelectedTau_eta);  
-        id = "DeepTau2017v2p1VSe";
-        if (SelectedTau_genPartFlav == 1 || SelectedTau_genPartFlav == 3){
-            bin = TauID_SF_eta_DeepTau2017v2p1VSe_UL2017_hist->GetXaxis()->FindBin(eta);
-            sf  = TauID_SF_eta_DeepTau2017v2p1VSe_UL2017_hist->GetBinContent(bin);
-            err = TauID_SF_eta_DeepTau2017v2p1VSe_UL2017_hist->GetBinError(bin);
-            vsEle.emplace_back(sf-err);
-            vsEle.emplace_back(sf);
-            vsEle.emplace_back(sf+err);
-        }
-        else{
-            vsEle.emplace_back(1.0);
-            vsEle.emplace_back(1.0);
-            vsEle.emplace_back(1.0);
-        }
-
-        //vs Mu
-        id = "DeepTau2017v2p1VSmu";
-        if (SelectedTau_genPartFlav == 2 || SelectedTau_genPartFlav == 4){
-            bin = TauID_SF_eta_DeepTau2017v2p1VSmu_UL2017_hist->GetXaxis()->FindBin(eta);
-            sf  = TauID_SF_eta_DeepTau2017v2p1VSmu_UL2017_hist->GetBinContent(bin);
-            err = TauID_SF_eta_DeepTau2017v2p1VSmu_UL2017_hist->GetBinError(bin);
-            vsMu.emplace_back(sf-err);
-            vsMu.emplace_back(sf);
-            vsMu.emplace_back(sf+err);
-        }
-        else{
-            vsMu.emplace_back(1.0);
-            vsMu.emplace_back(1.0);
-            vsMu.emplace_back(1.0);
-        }
-    }
-    
-    RVec<RVec<float>> result;
-    result.emplace_back(vsJet);
-    result.emplace_back(vsEle);
-    result.emplace_back(vsMu);
-
-    return result;
-}
-
-
 RVec<float> getTES(rvec_f Tau_pt, rvec_i Tau_decayMode, const RVec<UChar_t> &Tau_genPartFlav, bool IsMC, string year){
     string id = "DeepTau2017v2p1VSjet";
     
@@ -1044,159 +706,43 @@ RVec<float> getFES(rvec_f Tau_eta, rvec_i Tau_decayMode, rvec_i Tau_genPartFlav,
     return result_all;
 }
 
-float efficiency(int flv, float eta, float pt, string year){
+float M1T(float Lepton_pt, float Lepton_eta, float Lepton_phi, float Lepton_mass, float SelectedTau_pt, float SelectedTau_eta, float SelectedTau_phi, float SelectedTau_mass, float MET_pt, float MET_phi){
+    ROOT::Math::PtEtaPhiMVector lep_p4(Lepton_pt, Lepton_eta, Lepton_phi, Lepton_mass);
+    ROOT::Math::PtEtaPhiMVector tau_p4(SelectedTau_pt, SelectedTau_eta, SelectedTau_phi, SelectedTau_mass); //*taucorr
+    auto leptau_p4 = lep_p4 + tau_p4;
+    auto leptau_pt2 = leptau_p4.Perp2();
+    auto leptau_px = leptau_p4.Px();
+    auto leptau_py = leptau_p4.Py();
+    auto leptau_mass2 = leptau_p4.M2();
+    auto leptau_et = sqrt(leptau_mass2 + leptau_pt2);
+    auto MET_px = MET_pt*cos(MET_phi);
+    auto MET_py = MET_pt*sin(MET_phi);
+    auto sys_et2 = pow(leptau_et + MET_pt,2.);
+    auto sys_pt2 = pow(leptau_px + MET_px, 2.) + pow(leptau_py + MET_py, 2.);
+    auto M1T2 = sys_et2 - sys_pt2;
+    auto sign_M1T2 = M1T2/abs(M1T2);
 
-    //TString path = TString(remote_storage) + TString("Btag_eff_") + TString(year) + TString(".root");
-    //TFile *infile = new TFile(path);
-    //TFile *infile = TFile::Open(path);
-    TFile *infile = Btag_eff_UL2017;
-    //else if(year =="2018") infile = Btag_eff_2018;
-    TH2F * h;
-    if(flv == 5){
-        //TH2F * h = (TH2F *) infile->Get("h2_BTaggingEff_b")->CreateHistogram();
-        //TEfficiency *eff = (TEfficiency *) infile->Get("h2_BTaggingEff_b");
-        //h = (TH2F *) eff->CreateHistogram();
-        h = Btag_eff_UL2017_h_b;
-        
-    }
-    else if(flv == 4){
-        //TEfficiency *eff = (TEfficiency *) infile->Get("h2_BTaggingEff_c");
-        //h = (TH2F *) eff->CreateHistogram();
-        h = Btag_eff_UL2017_h_c;
-    }
-    else{
-        //h = (TH2F *) infile->Get("h2_BTaggingEff_udsg");
-        //TEfficiency *eff = (TEfficiency *) infile->Get("h2_BTaggingEff_udsg");
-        //h = (TH2F *) eff->CreateHistogram();
-        h = Btag_eff_UL2017_h_udsg;
-    }
-    
-    int binx = max(1, min(h->GetNbinsX(), h->GetXaxis()->FindBin(pt)));
-    int biny = max(1, min(h->GetNbinsY(), h->GetYaxis()->FindBin(abs(eta))));
-    
-    return h->GetBinContent(binx,biny);
-}
-    
-RVec<float> btagcalc(rvec_i GoodJets_idx, rvec_f Jet_pt, rvec_f Jet_eta, rvec_i Jet_partonFlavour, rvec_f Jet_btagDeepFlavB, rvec_f Jet_btagSF_deepjet_M_up, rvec_f Jet_btagSF_deepjet_M_down, rvec_f Jet_btagSF_deepjet_M, rvec_f Jet_btagDeepB, bool IsMC, string year){
-
-    if (IsMC == false){
-        RVec<float> result_dummy(5);
-        result_dummy[0] = 1.;
-        result_dummy[1] = 1.;
-        result_dummy[2] = 1.;
-        result_dummy[3] = 1.;
-        result_dummy[4] = 1.;
-    
-    return result_dummy;
-    
-    }
-    
-    string tagger = "DeepFlv"; 
-    string WP = "M";
-    float threshold;
-    //string year = "2017";
-    
-    float p_MC = 1.;
-    float p_data = 1.;
-    float p_data_btagUp = 1.;
-    float p_data_btagDown = 1.;
-    float p_data_mistagUp = 1.;
-    float p_data_mistagDown = 1.;
-
-    for (size_t i = 0; i < GoodJets_idx.size(); i++) {
-        int j = GoodJets_idx[i];
-        
-        if(tagger == "DeepFlv"){
-            //threshold = WPbtagger[tagger + "_" + WP];
-            threshold = 0.2770;
-            if(Jet_btagDeepFlavB[j] >= threshold && Jet_pt[j] > BTAG_PT_CUT && abs(Jet_eta[j])<BTAG_ETA_CUT){
-                p_MC =  p_MC * efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                p_data = p_data * Jet_btagSF_deepjet_M[j] * efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                if (abs(Jet_partonFlavour[j]) == 4 or abs(Jet_partonFlavour[j]) == 5){
-                    p_data_btagUp = p_data_btagUp * Jet_btagSF_deepjet_M_up[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_mistagUp = p_data_mistagUp * Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_btagDown = p_data_btagDown * Jet_btagSF_deepjet_M_down[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_mistagDown = p_data_mistagDown * Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                }
-                else{
-                    p_data_btagUp = p_data_btagUp *Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_mistagUp = p_data_mistagUp * Jet_btagSF_deepjet_M_up[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_btagDown = p_data_btagDown * Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_mistagDown = p_data_mistagDown *Jet_btagSF_deepjet_M_down[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                }
-            }  
-            else if (Jet_btagDeepFlavB[j] < threshold && Jet_pt[j] > BTAG_PT_CUT && abs(Jet_eta[j])<BTAG_ETA_CUT){
-                p_MC = p_MC *(1 - efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                p_data = p_data *(1 - Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                if (abs(Jet_partonFlavour[j]) == 4 || abs(Jet_partonFlavour[j]) == 5){
-                    p_data_btagUp =  p_data_btagUp * (1 - Jet_btagSF_deepjet_M_up[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_mistagUp = p_data_mistagUp * (1 - Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_btagDown = p_data_btagDown * (1 - Jet_btagSF_deepjet_M_down[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_mistagDown = p_data_mistagDown * (1 - Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                }
-                else{
-                    p_data_btagUp = p_data_btagUp * (1 - Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_mistagUp = p_data_mistagUp * (1 - Jet_btagSF_deepjet_M_up[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_btagDown = p_data_btagDown * (1 - Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_mistagDown =  p_data_mistagDown * (1 - Jet_btagSF_deepjet_M_down[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                }
-            }
-        }
-        
-        else if(tagger == "DeepCSV"){
-            //threshold = WPbtagger[tagger + "_" + WP];
-            threshold = 0.4184;
-            if (Jet_btagDeepB[j] >= threshold){
-                p_MC =  p_MC * efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                p_data = p_data * Jet_btagSF_deepjet_M[j] * efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                if (abs(Jet_partonFlavour[j]) == 4 || abs(Jet_partonFlavour[j]) == 5){
-                    p_data_btagUp = p_data_btagUp * Jet_btagSF_deepjet_M_up[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_mistagUp = p_data_mistagUp * Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_btagDown = p_data_btagDown * Jet_btagSF_deepjet_M_down[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_mistagDown = p_data_mistagDown * Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                }
-                else{
-                    p_data_btagUp = p_data_btagUp *Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_mistagUp = p_data_mistagUp * Jet_btagSF_deepjet_M_up[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_btagDown = p_data_btagDown * Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                    p_data_mistagDown = p_data_mistagDown *Jet_btagSF_deepjet_M_down[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year);
-                }
-            }
-            else if (Jet_btagDeepB[j] < threshold){
-                p_MC = p_MC * (1 - efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                p_data = p_data *(1 - Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                if (abs(Jet_partonFlavour[j]) == 4 || abs(Jet_partonFlavour[j]) == 5){
-                    p_data_btagUp =  p_data_btagUp * (1 - Jet_btagSF_deepjet_M_up[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_mistagUp = p_data_mistagUp * (1 - Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_btagDown = p_data_btagDown * (1 - Jet_btagSF_deepjet_M_down[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_mistagDown = p_data_mistagDown * (1 - Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                }
-                else{
-                    p_data_btagUp = p_data_btagUp * (1 - Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_mistagUp = p_data_mistagUp * (1 - Jet_btagSF_deepjet_M_up[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_btagDown = p_data_btagDown * (1 - Jet_btagSF_deepjet_M[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                    p_data_mistagDown =  p_data_mistagDown * (1 - Jet_btagSF_deepjet_M_down[j]*efficiency(abs(Jet_partonFlavour[j]), Jet_eta[j], Jet_pt[j], year));
-                }
-            }
-        }
-    }
-    
-    RVec<float> result(5);
-    result[0] = p_data/p_MC;
-    result[1] = p_data_btagUp/p_MC;
-    result[2] = p_data_btagDown/p_MC;
-    result[3] = p_data_mistagUp/p_MC;
-    result[4] = p_data_mistagDown/p_MC;
-    
-    return result;
+    return sign_M1T2*sqrt(sign_M1T2*M1T2);
 }
 
-unordered_set<int> data_flags({339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, });
+float Mo1(float Lepton_pt, float Lepton_eta, float Lepton_phi, float Lepton_mass, float SelectedTau_pt, float SelectedTau_eta, float SelectedTau_phi, float SelectedTau_mass, float MET_pt, float MET_phi){
+    ROOT::Math::PtEtaPhiMVector lep_p4(Lepton_pt, Lepton_eta, Lepton_phi, Lepton_mass);
+    ROOT::Math::PtEtaPhiMVector tau_p4(SelectedTau_pt, SelectedTau_eta, SelectedTau_phi, SelectedTau_mass); //*taucorr
+    auto leptau_p4 = lep_p4 + tau_p4;
+    auto lep_pt = Lepton_pt;
+    auto tau_pt = SelectedTau_pt; //*taucorr
+    auto leptau_px = leptau_p4.Px();
+    auto leptau_py = leptau_p4.Py();
+    auto MET_px = MET_pt*cos(MET_phi);
+    auto MET_py = MET_pt*sin(MET_phi);
+    auto sys_eo2 = pow(lep_pt + tau_pt + MET_pt, 2.);
+    auto sys_pt2 = pow(leptau_px + MET_px, 2.) + pow(leptau_py + MET_py, 2.);
+    auto Mo12 = sys_eo2 - sys_pt2;
+    auto sign_Mo12 = Mo12/abs(Mo12);
 
-
-unordered_set<int> dataEle_flags({361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, });
-
-unordered_set<int> dataMu_flags({339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360,});
+    return sign_Mo12*sqrt(sign_Mo12*Mo12);
+}
+    
 
 unordered_map<int,float> xsecs({
 {208,35.85},
@@ -1660,6 +1206,11 @@ unordered_map<int,float> Nevents({
 {360,0},
 });
 
+
+unordered_set<int> data_flags({339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, });
+unordered_set<int> dataEle_flags({361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, });
+unordered_set<int> dataMu_flags({339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360,});
+
 bool isMC(int SampleFlag){
     bool is_in = data_flags.find(SampleFlag) != data_flags.end();
     if (is_in == true) return false;
@@ -1688,39 +1239,6 @@ float getNevents(int Sample, bool IsMC){
         return  Nevents[Sample];
     }
 }
-
-
-float taujet_RelPt(int selectedtau_jetIdx, float selectedtau_pt, rvec_f Jet_pt){
-    if (selectedtau_jetIdx == -1) return -999.;
-    else return Jet_pt[selectedtau_jetIdx]/selectedtau_pt;
-}
-
-float taujet_deltaPhi(int selectedtau_jetIdx, float selectedtau_phi, rvec_f Jet_phi){
-    if (selectedtau_jetIdx == -1) return -999.;
-    else return deltaPhi(selectedtau_phi, Jet_phi[selectedtau_jetIdx]);
-}
-
-
-RVec<int> GetGenMatched(rvec_i Jet_genJetIdx, rvec_i GenJet_idx){
-    RVec<int> GenMatched_idx(2);
-    for (int i = 0; i < Jet_genJetIdx.size(); i++) {
-        if(Jet_genJetIdx[i] == GenJet_idx[0])  GenMatched_idx[0] = i;
-        else if(Jet_genJetIdx[i] == GenJet_idx[1])  GenMatched_idx[1] = i;
-    }
-    return GenMatched_idx;
-}
-
-
-bool DataLeptonCheck(int SampleFlag, int GoodLeptonFamily, bool isMC){
-    if(isMC == false){
-        bool is_in_ele = dataEle_flags.find(SampleFlag) != dataEle_flags.end();
-        if(is_in_ele == true && GoodLeptonFamily == 1) return false;
-        bool is_in_mu = dataMu_flags.find(SampleFlag) != dataMu_flags.end();
-        if(is_in_mu == true && GoodLeptonFamily == 0) return false;
-    }
-    return true;
-}
-
 
 
 unordered_map<int,bool> IsPdfHessian({
@@ -1773,126 +1291,6 @@ unordered_map<int,bool> IsPdfHessian({
 { 241 , true},
 { 242 , true}, 
 });
-
-RVec<float> PdfWeight_variations(rvec_f PdfWeight, float Generator_weight, int Sample){
-    
-    RVec<float> result(3);
-    
-    float pdf_totalUp = 1.;
-    float pdf_totalDown = 1.;
-    float pdf_totalSF = 1.;
-    
-    if (PdfWeight.size() > 0){
-    
-        //for(int i = 0; i < PdfWeight.size(); i++) w_PDF_all[ipdf] = LHEitem(pdfw)
-
-        float mean_pdf = 0.;
-        float rms = 0.;
-        pdf_totalSF = PdfWeight[0];
-
-        bool isPDFHessian = IsPdfHessian[Sample];
-
-        if(isPDFHessian) mean_pdf = PdfWeight[0];
-
-        else{ 
-            for (int j = 0; j < PdfWeight.size(); j++) mean_pdf += PdfWeight[j];
-            mean_pdf = mean_pdf / PdfWeight.size();
-        }
-
-        for (int j = 0; j < PdfWeight.size(); j++) rms = rms + pow(PdfWeight[j]-mean_pdf, 2);
-        if (!isPDFHessian) rms = rms / (PdfWeight.size() - 1.);
-
-        pdf_totalUp = mean_pdf + rms;
-        pdf_totalDown = mean_pdf - rms;
-
-        if (Generator_weight < 0.){
-            pdf_totalSF = pdf_totalSF * -1.;
-            pdf_totalUp = pdf_totalUp * -1.;
-            pdf_totalDown = pdf_totalDown * -1.;
-        }
-
-    }
-    
-    result[0] = pdf_totalSF;
-    result[1] = pdf_totalUp;
-    result[2] = pdf_totalDown;
-
-    return result;
-}
-
-RVec<float> QCDScale_variations(rvec_f LHEScaleWeight){
-    RVec<float> result(3); 
-    float lheSF = 1.;
-    float lheUp = 1.;
-    float lheDown = 1.;
-    
-    if(LHEScaleWeight.size() > 1){
-       lheDown = Min(LHEScaleWeight);
-       lheUp = Max(LHEScaleWeight);     
-       if (LHEScaleWeight.size() < 9) lheSF = 1.;
-       else lheSF = LHEScaleWeight[4]*1.;  
-    }
-    
-    result[0] = lheSF;
-    result[1] = lheUp;
-    result[2] = lheDown;
-    
-    return result;
-}
-
-RVec<float> PSWeight_variations(rvec_f PSWeight){
-    RVec<float> result(4);
-    
-    float isrmin = 1.;
-    float isrmax = 1.;
-    float fsrmin = 1.;
-    float fsrmax = 1.;
-    if (PSWeight.size() > 1){
-        isrmin = min(PSWeight[0], PSWeight[3]);
-        isrmax = max(PSWeight[0], PSWeight[3]);
-        fsrmin = min(PSWeight[1], PSWeight[3]);
-        fsrmax = max(PSWeight[1], PSWeight[3]);
-    }
-    else{
-        isrmin = PSWeight[0];
-        isrmax = PSWeight[0];
-        fsrmin = PSWeight[0];
-        fsrmax = PSWeight[0];
-    }
-    
-    result[0] = isrmin;
-    result[1] = isrmax;
-    result[2] = fsrmin;
-    result[3] = fsrmax;
-    
-    return result;
-}
-
-float input_min[] = {100.28593999999999653028, 165.25651999999999475222, 30.00037199999999870670, 30.00000599999999906231, 0.00000000000000000000, 18.15067900000000022942, 0.27449592999999999909, 3.00000000000000000000, -1.70036019999999998831, 0.00008993041400000000, -3.14158369999999997901, 0.00091377785000000002, 0.87548829999999999707, 0.00000000000000000000, 0.08643542999999999366, 0.36279296999999999240, -2.00000000000000000000, 0.00092983246000000002, 15.49264299999999927593, 0.19364806000000001074, -1.00000000000000000000, 127.83593999999999368811, 30.00007400000000146179, -9.45703100000000063119, 0.08710099000000000313, 30.00000000000000000000, 0.27510827999999998283, 0.20742350000000001065}; 
-float input_max[] = {9199.20299999999951978680, 9837.16200000000026193447, 2622.35669999999981882866, 1320.96579999999994470272, 6.00000000000000000000, 2994.18530000000009749783, 2786.51980000000003201421, 83.00000000000000000000, 1.90496120000000002115, 2416.57250000000021827873, 3.14158630000000016480, 392.68085000000002082743, 1.00000000000000000000, 0.99966717000000004933, 1878.42049999999994724931, 0.99951170000000000293, 30.82330500000000128580, 0.99951170000000000293, 2527.22800000000006548362, 2387.76899999999977808329, 0.99951170000000000293, 9579.11800000000039290171, 2473.33149999999977808329, 9.59863299999999952661, 2179.95949999999993451638, 1641.57960000000002764864, 1279.73929999999995743565, 1509.54549999999994724931}; 
-float output_min = 0.000000; 
-float output_max = 1.000000; 
-
-float sc(float input, int c){
-      float ret = (input - input_min[c]) / (input_max[c] - input_min[c]) * (output_max - output_min) + output_min;
-      return ret;
-}
-
-
-
-float get_ptrel(float jet_pt, float jet_eta, float jet_phi, float jet_mass, float lepton_pt, float lepton_eta, float lepton_phi, float lepton_mass){
-    //ROOT::Math::PtEtaPhiMVector jet_p4(jet_pt, jet_eta, jet_phi, jet_mass);
-    //ROOT::Math::PtEtaPhiMVector lepton_p4(lepton_pt, lepton_eta, lepton_phi, lepton_mass);
-    TLorentzVector jet_p4;
-    TLorentzVector lepton_p4;
-    jet_p4.SetPtEtaPhiM(jet_pt, jet_eta, jet_phi, jet_mass);
-    lepton_p4.SetPtEtaPhiM(lepton_pt, lepton_eta, lepton_phi, lepton_mass);
-    auto lepjet_tv = (jet_p4+lepton_p4).Vect();
-    auto lep_tv = lepton_p4.Vect();
-    float ptrel = (lepjet_tv.Cross(lep_tv)).Mag()/(lepjet_tv.Mag());
-    //float ptrel = lepjet_tv.mag2();
-    return ptrel;
-}
 
 float Get_isolation(rvec_f Electron_jetRelIso, rvec_i Electron_idx, rvec_f Muon_pfRelIso04_all, rvec_i Muon_idx, int GoodLeptonFamily){
     if(GoodLeptonFamily == 0) return Electron_jetRelIso[Electron_idx[0]];
