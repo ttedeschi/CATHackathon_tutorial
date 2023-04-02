@@ -85,19 +85,13 @@ const size_t ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE_UL2018 = 16;
 const size_t ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU_UL2018 = 16;
 const size_t ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU_UL2018 = 16;
 
-//const size_t ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE = 16;  //DUMMY!!!!!!!!
-//const size_t ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU = 8; 
+const size_t ID_TAU_RECO_DEEPTAU_VSJET=  64;
+const size_t ID_TAU_RECO_DEEPTAU_VSELE=  4; 
+const size_t ID_TAU_RECO_DEEPTAU_VSMU=   8; 
 
-//const size_t ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 16; //byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight
-//const size_t ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 8; //byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight
-
-const size_t ID_TAU_RECO_DEEPTAU_VSJET=  64; //byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight
-const size_t ID_TAU_RECO_DEEPTAU_VSELE=  4;  //byDeepTau2017v2p1VSe ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight
-const size_t ID_TAU_RECO_DEEPTAU_VSMU=   8;  //byDeepTau2017v2p1VSmu ID working points (deepTau2017v2p1): bitmask 1 = VLoose, 2 = Loose, 4 = Medium, 8 = Tight
-
-const size_t ID_TAU_RECO_MVA=            8; //IsolationMVArun2v1DBoldDMwLT ID working point (2017v1): bitmask 1 = VVLoose, 2 = VLoose, 4 = Loose, 8 = Medium, 16 = Tight, 32 = VTight, 64 = VVTight
-const size_t ID_TAU_ANTIMU=              1; //Anti-muon discriminator V3: : bitmask 1 = Loose, 2 = Tight
-const size_t ID_TAU_ANTIELE=             2; //Anti-electron MVA discriminator V6 (2015): bitmask 1 = VLoose, 2 = Loose, 4 = Medium, 8 = Tight, 16 = VTight
+const size_t ID_TAU_RECO_MVA=            8; 
+const size_t ID_TAU_ANTIMU=              1; 
+const size_t ID_TAU_ANTIELE=             2; 
 const float PT_CUT_TAU=30;
 const float ETA_CUT_TAU=2.3;
 const float M_JJ_CUT=   500;
@@ -107,35 +101,9 @@ const string vsJetwp = "VTight";
 const string vsElewp = "VLoose";
 const string vsMuwp = "Tight";
 
-//const string remote_storage = "https://ttedesch.web.cern.ch/ttedesch/nanoAOD-tools_UL/python/postprocessing/";
 const string remote_storage = "https://vbs-pg-support.web.cern.ch/nanoAOD-tools/python/postprocessing/";
 
-/*
-TFile *TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017 = TFile::Open(TString(remote_storage) + TString("data/tauSF/TauID_SF_pt_") + TString("DeepTau2017v2p1VSjet") + TString("_") + TString("2017") + TString("ReReco") + TString(".root"));
-TString path_down = TString(TString(vsJetwp) + TString("_down"));
-TString path_cent = TString(TString(vsJetwp) + TString("_cent"));
-TString path_up = TString(TString(vsJetwp) + TString("_up"));
-TF1 * TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017_h_down = (TF1*)TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017->Get(path_down);
-TF1 * TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017_h_cent =  (TF1*)TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017->Get(path_cent);
-TF1 * TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017_h_up =  (TF1*)TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017->Get(path_up);
 
-TFile *TauID_SF_eta_DeepTau2017v2p1VSe_UL2017 = TFile::Open(TString(remote_storage) + TString("data/tauSF/TauID_SF_eta_") + TString("DeepTau2017v2p1VSe") + TString("_") + TString("2017") + TString("ReReco") + TString(".root"));
-TString histoname_ele = TString(vsElewp);
-TH1F * TauID_SF_eta_DeepTau2017v2p1VSe_UL2017_hist = (TH1F *) TauID_SF_eta_DeepTau2017v2p1VSe_UL2017->Get(histoname_ele);
-
-TFile *TauID_SF_eta_DeepTau2017v2p1VSmu_UL2017 = TFile::Open(TString(remote_storage) + TString("data/tauSF/TauID_SF_eta_") + TString("DeepTau2017v2p1VSmu") + TString("_") + TString("2017") + TString("ReReco") + TString(".root"));
-TString histoname_mu = TString(vsMuwp);
-TH1F * TauID_SF_eta_DeepTau2017v2p1VSmu_UL2017_hist = (TH1F *) TauID_SF_eta_DeepTau2017v2p1VSmu_UL2017->Get(histoname_mu);
-
-TFile *TauES_dm_DeepTau2017v2p1VSjet_UL2017 = TFile::Open(TString(remote_storage) + TString("data/tauSF/TauES_dm_") + TString("DeepTau2017v2p1VSjet") + TString("_") + TString("2017") + TString("ReReco") +  TString(".root"));        
-TH1F * TauES_dm_DeepTau2017v2p1VSjet_UL2017_hist_low = (TH1F *) TauES_dm_DeepTau2017v2p1VSjet_UL2017->Get("tes");
-
-TFile *TauES_dm_DeepTau2017v2p1VSjet_UL2017_ptgt100 = TFile::Open(TString(remote_storage) + TString("data/tauSF/TauES_dm_") + TString("DeepTau2017v2p1VSjet") + TString("_") + TString("2017") + TString("ReReco") + TString("_ptgt100.root"));
-TH1F * TauES_dm_DeepTau2017v2p1VSjet_UL2017_ptgt100_hist_high = (TH1F *) TauES_dm_DeepTau2017v2p1VSjet_UL2017_ptgt100->Get("tes");
-
-TFile *TauFES_eta_dm_DeepTau2017v2p1VSe_UL2017 = TFile::Open(TString(remote_storage) + TString("data/tauSF/TauFES_eta-dm_") + TString("DeepTau2017v2p1VSe") + TString("_") + TString("2017")  + TString("ReReco") + TString(".root"));
-TGraphAsymmErrors * TauFES_eta_dm_DeepTau2017v2p1VSe_UL2017_graph = (TGraphAsymmErrors *) TauFES_eta_dm_DeepTau2017v2p1VSe_UL2017->Get("fes");
-*/
 
 TFile *TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017 = TFile::Open(TString(remote_storage) + TString("data/tauSF/TauID_SF_pt_") + TString("DeepTau2017v2p1VSjet") + TString("_") + TString("UL2017") + TString(".root"));
 TString path_down = TString(TString(vsJetwp) + TString("_down"));
@@ -170,29 +138,20 @@ TH2F *Btag_eff_UL2017_h_c = (TH2F *) eff_c->CreateHistogram();
 TEfficiency *eff_udsg = (TEfficiency *) Btag_eff_UL2017->Get("h2_BTaggingEff_udsg");
 TH2F *Btag_eff_UL2017_h_udsg = (TH2F *) eff_udsg->CreateHistogram();
 
-//TFile *FR_vsjet2_vsmuT_ZZ = TFile::Open(TString(remote_storage) + TString("FR_vsjet2_vsmuT_ZZ.root"));
 TFile *FR_vsjet2_vsmuT_ZZ = TFile::Open(TString(remote_storage) + TString("FR_vsjet2_UL2017.root"));
 TH2F *FR_vsjet2_vsmuT_ZZ_histo_ele = (TH2F*)FR_vsjet2_vsmuT_ZZ->Get("FakeRatio_Electron");
 TH2F *FR_vsjet2_vsmuT_ZZ_histo_mu = (TH2F*)FR_vsjet2_vsmuT_ZZ->Get("FakeRatio_Muon");
 TH2F *FR_vsjet2_vsmuT_ZZ_histo_tau = (TH2F*)FR_vsjet2_vsmuT_ZZ->Get("FakeRatio_Tau");
                                         
-//TFile *FR_vsjet4_vsmuT_ZZ = TFile::Open(TString(remote_storage) + TString("FR_vsjet4_vsmuT_ZZ.root"));
 TFile *FR_vsjet4_vsmuT_ZZ = TFile::Open(TString(remote_storage) + TString("FR_vsjet4_UL2017.root"));
 TH2F *FR_vsjet4_vsmuT_ZZ_histo_ele = (TH2F*)FR_vsjet4_vsmuT_ZZ->Get("FakeRatio_Electron");
 TH2F *FR_vsjet4_vsmuT_ZZ_histo_mu = (TH2F*)FR_vsjet4_vsmuT_ZZ->Get("FakeRatio_Muon");
 TH2F *FR_vsjet4_vsmuT_ZZ_histo_tau = (TH2F*)FR_vsjet4_vsmuT_ZZ->Get("FakeRatio_Tau");
 
-//TFile *FR_vsjet8_vsmuT_ZZ = TFile::Open(TString(remote_storage) + TString("FR_vsjet4_vsmuT_ZZ.root"));
 TFile *FR_vsjet8_vsmuT_ZZ = TFile::Open(TString(remote_storage) + TString("FR_vsjet8_UL2017.root"));
 TH2F *FR_vsjet8_vsmuT_ZZ_histo_ele = (TH2F*)FR_vsjet8_vsmuT_ZZ->Get("FakeRatio_Electron");
 TH2F *FR_vsjet8_vsmuT_ZZ_histo_mu = (TH2F*)FR_vsjet8_vsmuT_ZZ->Get("FakeRatio_Muon");
 TH2F *FR_vsjet8_vsmuT_ZZ_histo_tau = (TH2F*)FR_vsjet8_vsmuT_ZZ->Get("FakeRatio_Tau");
-
-//std::map<string, std::map<string, float> > WP_btagger = {
-//    { "CSVv2", {{"L",0.5803},{"M", 0.8838},{"T", 0.9693}}},
-//    { "DeepCSV", {{"L", 0.1522},{"M", 0.4941},{"T", 0.8001}}},
-//    { "DeepFlv", {{"L", 0.0521},{"M", 0.3033},{"T", 0.7489}}},
-//};
 
 float deltaPhi (float phi1, float phi2){
     float dphi = (phi1-phi2);
@@ -270,13 +229,10 @@ RVec<size_t> SelectVBSJets_invmass(rvec_f pt, rvec_f eta, rvec_f phi, rvec_f mas
     for (size_t i = 0; i < idx_cmb[0].size(); i++) {
         const auto i1 = idx_cmb[0][i];
         const auto i2 = idx_cmb[1][i];
-        //cout<<i1<<i2<<endl;
         if (abs(eta[GoodJets_idx[i1]] - eta[GoodJets_idx[i2]]) >= DELTAETA_JJ_CUT) {
             ROOT::Math::PtEtaPhiMVector p1(pt[GoodJets_idx[i1]], eta[GoodJets_idx[i1]], phi[GoodJets_idx[i1]], mass[GoodJets_idx[i1]]);
             ROOT::Math::PtEtaPhiMVector p2(pt[GoodJets_idx[i2]], eta[GoodJets_idx[i2]], phi[GoodJets_idx[i2]], mass[GoodJets_idx[i2]]);
-            //const auto this_mass = (p1 + p2).M();
             float this_mass = (p1 + p2).M();
-            //cout<<this_mass<<endl;
             if (this_mass > best_mass) {
                 best_mass = this_mass;
                 best_i1 = GoodJets_idx[i1];
@@ -284,7 +240,6 @@ RVec<size_t> SelectVBSJets_invmass(rvec_f pt, rvec_f eta, rvec_f phi, rvec_f mas
             }
         }
     } 
-    //cout<<"best "<<best_i1<<best_i2<<best_mass;
     idx.emplace_back(best_i1);
     idx.emplace_back(best_i2);
     return idx;
@@ -321,14 +276,6 @@ float GetInvMassNoIndex4(float pt1, float eta1, float phi1, float mass1, float p
     return (p1 + p2 + p3 + p4).M();
 }
 
-//float ComputeTransverseMass(float met_et, float met_phi, float lep_pt, float lep_eta, float lep_phi, float lep_e)
-//{
-//    ROOT::Math::PtEtaPhiEVector met(met_et, 0, met_phi, met_et);
-//    ROOT::Math::PtEtaPhiEVector lep(lep_pt, lep_eta, lep_phi, lep_e);
-//    return (met + lep).Mt() / 1000.0;
-//}
-
-
 float GetLeading(rvec_f Jet_pt, rvec_i VBSJet_idx){
     return Jet_pt[VBSJet_idx[0]];
 }
@@ -350,7 +297,6 @@ float GetLeptonSF(rvec_f Electron_pt, rvec_i Electron_idx, rvec_f Muon_pt, rvec_
     }
 }
 
-//float GetLeptonTightFlag(rvec_i Electron_idx, rvec_i Muon_idx, int GoodLeptonFamily){
 int GetLeptonTightFlag(rvec_i Electron_idx, rvec_i Muon_idx, int GoodLeptonFamily){
     if (GoodLeptonFamily == 0) return Electron_idx[1];
     else return Muon_idx[1];
@@ -361,14 +307,6 @@ float GetTau(rvec_f pt, rvec_i idx){
 }
 
 RVec<int> SelectElectron(rvec_f lepton_pt, rvec_f lepton_eta, rvec_f lepton_phi, rvec_f lepton_jetRelIso, rvec_b lepton_mvaFall17V2Iso_WPL, rvec_f lepton_mvaFall17V2Iso_WP90, rvec_f jet_eta, rvec_f jet_phi, rvec_i VBSJets_idx, string Year){
-    //setting jet-related quantities if isolation from them is needed
-    //const auto jet1_idx = VBSJets_idx[0];
-    //const auto jet2_idx = VBSJets_idx[1];
-
-    //const auto jet1eta = jet_eta[jet1_idx];
-    //const auto jet2eta = jet_eta[jet2_idx];
-    //const auto jet1phi = jet_phi[jet1_idx];
-    //const auto jet2phi = jet_phi[jet2_idx];
     
     float PT_CUT_ELE;
     
@@ -431,18 +369,9 @@ RVec<int> SelectElectron(rvec_f lepton_pt, rvec_f lepton_eta, rvec_f lepton_phi,
 
 
 RVec<int> SelectMuon(rvec_f lepton_pt, rvec_f lepton_eta, rvec_f lepton_phi, rvec_b lepton_tightId, rvec_b lepton_looseId, rvec_f Iso04_all, rvec_f jet_eta, rvec_f jet_phi, rvec_i VBSJets_idx){
-    //setting jet-related quantities if isolation from them is needed
-    //const auto jet1_idx = VBSJets_idx[0];
-    //const auto jet2_idx = VBSJets_idx[1];
-    //const auto jet1eta = lepton_pt[0]
-    //const auto jet1eta = jet_eta[jet1_idx];
-    //const auto jet2eta = jet_eta[jet2_idx];
-    //const auto jet1phi = jet_phi[jet1_idx];
-    //const auto jet2phi = jet_phi[jet2_idx];
     
     float jet1_idx = VBSJets_idx[0];
     float jet2_idx = VBSJets_idx[1];
-    //const auto jet1eta = lepton_pt[0]
     float jet1eta = jet_eta[jet1_idx];
     float jet2eta = jet_eta[jet2_idx];
     float jet1phi = jet_phi[jet1_idx];
@@ -500,13 +429,8 @@ int DetermineGoodLepton(bool HLT_IsoMu27, bool HLT_Mu50, bool HLT_Ele35_WPTight_
     bool passHT = false;
     int GoodLeptonFamily;
     
-    //if(HLT_IsoMu27 || HLT_Mu50) passMu = true;
-    //if(HLT_Ele35_WPTight_Gsf || HLT_Ele32_WPTight_Gsf_L1DoubleEG || HLT_Photon200) passEle = true;
-    //if(HLT_PFHT250 || HLT_PFHT350) passHT = true;
-    
     if(HLT_IsoMu27) passMu = true;
     if(HLT_Ele35_WPTight_Gsf) passEle = true;
-    //if(HLT_PFHT250 || HLT_PFHT350) passHT = true;
     
     bool ele_lepton_veto = false;
     bool mu_lepton_veto = false;
@@ -628,7 +552,6 @@ RVec<int> SelectAndVetoTaus(rvec_f Tau_pt, rvec_f Tau_eta, rvec_f Tau_phi, RVec<
         
         if (GoodLeptonFamily == 0) {
             cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE;
-            //if ((Tau_idDeepTau2017v2p1VSjet[i]>=cutloose_vsjet && Tau_idDeepTau2017v2p1VSe[i]>=ID_TAU_RECO_DEEPTAU_VSELE && Tau_idDeepTau2017v2p1VSmu[i]>=ID_TAU_RECO_DEEPTAU_VSMU) && deltaR(Tau_eta[i], Tau_phi[i], Electron_eta[Electron_idx[0]], Electron_phi[Electron_idx[0]])>DR_OVERLAP_CONE_TAU && deltaR(Tau_eta[i], Tau_phi[i], jet1eta, jet1phi)>isocone && deltaR(Tau_eta[i], Tau_phi[i], jet2eta, jet2phi)>isocone && Tau_pt[i] * TES[i] * FES[i] >=PT_CUT_TAU && abs(Tau_eta[i])<=ETA_CUT_TAU){
             if ((Tau_idDeepTau2017v2p1VSjet[i]>=cutloose_vsjet && Tau_idDeepTau2017v2p1VSe[i]>=ID_TAU_RECO_DEEPTAU_VSELE && Tau_idDeepTau2017v2p1VSmu[i]>=ID_TAU_RECO_DEEPTAU_VSMU) && deltaR(Tau_eta[i], Tau_phi[i], Electron_eta[Electron_idx[0]], Electron_phi[Electron_idx[0]])>DR_OVERLAP_CONE_TAU && deltaR(Tau_eta[i], Tau_phi[i], jet1eta, jet1phi)>isocone && deltaR(Tau_eta[i], Tau_phi[i], jet2eta, jet2phi)>isocone && Tau_pt[i] >=PT_CUT_TAU && abs(Tau_eta[i])<=ETA_CUT_TAU){
                 nTau++;
                 
@@ -651,7 +574,6 @@ RVec<int> SelectAndVetoTaus(rvec_f Tau_pt, rvec_f Tau_eta, rvec_f Tau_phi, RVec<
 
         else if (GoodLeptonFamily == 1) {
             cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU;
-            //if ((Tau_idDeepTau2017v2p1VSjet[i]>=cutloose_vsjet && Tau_idDeepTau2017v2p1VSe[i]>=ID_TAU_RECO_DEEPTAU_VSELE && Tau_idDeepTau2017v2p1VSmu[i]>=ID_TAU_RECO_DEEPTAU_VSMU) && deltaR(Tau_eta[i], Tau_phi[i], Muon_eta[Muon_idx[0]], Muon_phi[Muon_idx[0]])>DR_OVERLAP_CONE_TAU && deltaR(Tau_eta[i], Tau_phi[i], jet1eta, jet1phi)>isocone && deltaR(Tau_eta[i], Tau_phi[i], jet2eta, jet2phi)>isocone && Tau_pt[i] * TES[i] * FES[i] >=PT_CUT_TAU && abs(Tau_eta[i])<=ETA_CUT_TAU){
             if ((Tau_idDeepTau2017v2p1VSjet[i]>=cutloose_vsjet && Tau_idDeepTau2017v2p1VSe[i]>=ID_TAU_RECO_DEEPTAU_VSELE && Tau_idDeepTau2017v2p1VSmu[i]>=ID_TAU_RECO_DEEPTAU_VSMU) && deltaR(Tau_eta[i], Tau_phi[i], Muon_eta[Muon_idx[0]], Muon_phi[Muon_idx[0]])>DR_OVERLAP_CONE_TAU && deltaR(Tau_eta[i], Tau_phi[i], jet1eta, jet1phi)>isocone && deltaR(Tau_eta[i], Tau_phi[i], jet2eta, jet2phi)>isocone && Tau_pt[i] >=PT_CUT_TAU && abs(Tau_eta[i])<=ETA_CUT_TAU){
                 nTau++;
                 if(Tau_idDeepTau2017v2p1VSjet[i]>=ID_TAU_RECO_DEEPTAU_VSJET){
@@ -710,8 +632,6 @@ bool BVeto_loose(rvec_f Jet_pt, rvec_f Jet_eta, rvec_f Jet_btagDeepFlavB, rvec_i
 {
     bool veto = false;
     for (size_t i = 0; i < GoodJet_idx.size(); i++) {
-        //if (Jet_btagDeepFlavB[i]>=WP_btagger[BTAG_ALGO][BTAG_WP])*(Jet_pt[i]>BTAG_PT_CUT)*(abs(Jet_eta[i])<BTAG_ETA_CUT) return true;
-        //if ((Jet_btagDeepFlavB[i]>=BTAG_WP_VALUE) && (Jet_pt[i]>BTAG_PT_CUT) && (abs(Jet_eta[i])<BTAG_ETA_CUT)) return false;
         if ((Jet_btagDeepFlavB[GoodJet_idx[i]]>=BTAG_WP_VALUE_LOOSE) && (Jet_pt[GoodJet_idx[i]]>BTAG_PT_CUT) && (abs(Jet_eta[GoodJet_idx[i]])<BTAG_ETA_CUT)) return false;
     }
     return true;
@@ -773,14 +693,7 @@ float Mo1(float Lepton_pt, float Lepton_eta, float Lepton_phi, float Lepton_mass
 
 
 float SFFakeRatio_lep_calc_vsjet2(float pT, float eta, int pdgId){
-    
-    //TFile inFile("FR_vsjet2_vsmuT_ZZ.root"); 
-    //TFile *inFile = FR_vsjet2_vsmuT_ZZ;
     TH2F *histo;
-    //if (abs(pdgId) == 11) histo = (TH2F*)inFile.Get("hFRDataeledif");
-    //else if (abs(pdgId) == 13) histo = (TH2F*)inFile.Get("hFRDatamudif");
-    //if (abs(pdgId) == 11) histo = (TH2F*)inFile->Get("hFRDataeledif");
-    //else if (abs(pdgId) == 13) histo = (TH2F*)inFile->Get("hFRDatamudif");
     if (abs(pdgId) == 11) histo = FR_vsjet2_vsmuT_ZZ_histo_ele;
     else if (abs(pdgId) == 13) histo = FR_vsjet2_vsmuT_ZZ_histo_mu;
 
@@ -800,14 +713,7 @@ float SFFakeRatio_lep_calc_vsjet2(float pT, float eta, int pdgId){
 }
         
 float SFFakeRatio_lep_calc_vsjet4(float pT, float eta, int pdgId){
-    
-    //TFile inFile("FR_vsjet4_vsmuT_ZZ.root"); 
-    //TFile *inFile = FR_vsjet4_vsmuT_ZZ;
     TH2F *histo;
-    //if (abs(pdgId) == 11) histo = (TH2F*)inFile.Get("hFRDataeledif");
-    //else if (abs(pdgId) == 13) histo = (TH2F*)inFile.Get("hFRDatamudif");
-    //if (abs(pdgId) == 11) histo = (TH2F*)inFile->Get("hFRDataeledif");
-    //else if (abs(pdgId) == 13) histo = (TH2F*)inFile->Get("hFRDatamudif");
     if (abs(pdgId) == 11) histo = FR_vsjet4_vsmuT_ZZ_histo_ele;
     else if (abs(pdgId) == 13) histo = FR_vsjet4_vsmuT_ZZ_histo_mu;
 
@@ -885,61 +791,6 @@ float GetEventSFFake(float lepton_SFFake, float tau_SFFake, int lepton_LnTRegion
     else if (lepton_LnTRegion==0 && tau_LnTRegion==0) return 0.;
 }
 
-
-/*
-RVec<int> SelectVBSQGenJet(rvec_i GenPart_pdgId, rvec_i GenPart_genPartIdxMother, rvec_f GenPart_pt, rvec_f GenPart_eta, rvec_i GenJet_partonFlavour, rvec_f GenJet_pt, rvec_f GenJet_eta){
-
-    RVec<int> GenPart_idx;
-    for (int i = 0; i < GenPart_pdgId.size(); i++) {
-        if(GenPart_genPartIdxMother[i]==0 and abs(GenPart_pdgId[i])>0 and abs(GenPart_pdgId[i])<10) GenPart_idx.emplace_back(i);
-    }
-    
-    int GenPart_idx1 = GenPart_idx[0];
-    int GenPart_idx2 = GenPart_idx[1];
-    
-    int qflav1 = GenPart_pdgId[GenPart_idx1];
-    int qflav2 = GenPart_pdgId[GenPart_idx2];
-    
-    RVec<int> GenJet_idx;
-
-    for (int i = 0; i < GenJet_partonFlavour.size(); i++) {
-        if(abs(GenJet_partonFlavour[i])>0 && abs(GenJet_partonFlavour[i])<10 && (GenJet_partonFlavour[i]==qflav1 || GenJet_partonFlavour[i]==qflav2)) GenJet_idx.emplace_back(i);
-    }
-    
-    float discrim1 = 1000000.;
-    float discrim2 = 1000000.;
-    int idx_genjet1 = -1;
-    int idx_genjet2 = -1;
-    float tmpdiscr1;
-    float tmpdiscr2;
-           
-    for (int i = 0; i < GenJet_idx.size(); i++) {
-        tmpdiscr1 = abs(GenJet_eta[GenJet_idx[i]] -  GenPart_eta[GenPart_idx1]) + abs(GenJet_pt[GenJet_idx[i]] -  GenPart_pt[GenPart_idx1]);
-        tmpdiscr2 = abs(GenJet_eta[GenJet_idx[i]] -  GenPart_eta[GenPart_idx1]) + abs(GenJet_pt[GenJet_idx[i]] -  GenPart_pt[GenPart_idx1]);
-        if(tmpdiscr1 < discrim1){
-            discrim1 = tmpdiscr1;
-            idx_genjet1 = GenJet_idx[i];
-        }
-        if(tmpdiscr2 < discrim2){
-            discrim2 = tmpdiscr2;
-            idx_genjet2 = GenJet_idx[i];
-        }
-    }
-        
-    RVec<int> finalgenjets_idx(2);
-           
-    if(GenJet_pt[idx_genjet1] > GenJet_pt[idx_genjet2]){ 
-           finalgenjets_idx[0] = idx_genjet1;
-           finalgenjets_idx[1] = idx_genjet2;
-    }
-    else{ 
-           finalgenjets_idx[0] = idx_genjet2;
-           finalgenjets_idx[1] = idx_genjet1;
-    }
-    return finalgenjets_idx;
-}
-*/
-
 RVec<int> SelectVBSQGenJet(rvec_i GenPart_pdgId, rvec_i GenPart_genPartIdxMother, rvec_f GenPart_pt, rvec_f GenPart_eta, rvec_i GenJet_partonFlavour, rvec_f GenJet_pt, rvec_f GenJet_eta){
 
     RVec<int> GenPart_idx;
@@ -995,7 +846,6 @@ RVec<int> SelectVBSQGenJet(rvec_i GenPart_pdgId, rvec_i GenPart_genPartIdxMother
         }
     }
     
-    //cout<<idx_genjet1<<": "<<discrim1<<", "<<idx_genjet2<<": "<<discrim2<<endl;
     
     if((idx_genjet1 == -1 || idx_genjet2 == -1) || (idx_genjet1 == idx_genjet2)) return dummy_idx;
     
@@ -1040,26 +890,9 @@ RVec<RVec<float>> getTauSF(float SelectedTau_pt, float SelectedTau_eta, int Sele
     
     else{
         string id;
-        //std::string year = std::to_string(2017);
-        // vs Jet
         id =  "DeepTau2017v2p1VSjet";
-        //TString path = TString(remote_storage) + TString("data/tauSF/TauID_SF_pt_") + TString(id) + TString("_") + TString(year) + TString("ReReco") + TString(".root");
-        //TFile *f = new TFile(path);
-        //TFile *f =  TauID_SF_pt_DeepTau2017v2p1VSjet_2017ReReco;
-        //else if (year == "2017") TFile *f =  TauID_SF_pt_DeepTau2017v2p1VSjet_2018ReReco;
-        //TFile *f = TFile::Open(path);
-        //TFile *f = new TFile();
         double_t pt = SelectedTau_pt;
         if (SelectedTau_genPartFlav==5){
-            //TString path_down = TString(TString(vsJetwp) + TString("_down"));
-            //TString path_cent = TString(TString(vsJetwp) + TString("_cent"));
-            //TString path_up = TString(TString(vsJetwp) + TString("_up"));
-            //TF1 * h_down = (TF1*)f->Get(path_down);
-            //TF1 * h_cent =  (TF1*)f->Get(path_cent);
-            //TF1 * h_up =  (TF1*)f->Get(path_up);
-            //vsJet.emplace_back(h_down->Eval(pt));
-            //vsJet.emplace_back(h_cent->Eval(pt));
-            //vsJet.emplace_back(h_up->Eval(pt));
             vsJet.emplace_back(TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017_h_down->Eval(pt));
             vsJet.emplace_back(TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017_h_cent->Eval(pt));
             vsJet.emplace_back(TauID_SF_pt_DeepTau2017v2p1VSjet_UL2017_h_up->Eval(pt));
@@ -1073,21 +906,8 @@ RVec<RVec<float>> getTauSF(float SelectedTau_pt, float SelectedTau_eta, int Sele
         int bin;
         float sf, err;
         float eta = abs(SelectedTau_eta);  
-
-        // vs ele
         id = "DeepTau2017v2p1VSe";
-        //TString path_ele =  TString(remote_storage) + TString("data/tauSF/TauID_SF_eta_") + TString(id) + TString("_") + TString(year) + TString("ReReco") + TString(".root");
-        //TFile *f_ele = new TFile(path_ele);
-        //TFile *f_ele = TFile::Open(path_ele);
-
-        //TFile *f_ele = TauID_SF_eta_DeepTau2017v2p1VSe_2017ReReco;
-        //else if(year == "2018") TFile *f_ele = TauID_SF_eta_DeepTau2017v2p1VSe_2018ReReco;
-        //TString histoname_ele = TString(vsElewp);
-        //TH1F * hist = (TH1F *) f_ele->Get(histoname_ele);
         if (SelectedTau_genPartFlav == 1 || SelectedTau_genPartFlav == 3){
-            //bin = hist->GetXaxis()->FindBin(eta);
-            //sf  = hist->GetBinContent(bin);
-            //err = hist->GetBinError(bin);
             bin = TauID_SF_eta_DeepTau2017v2p1VSe_UL2017_hist->GetXaxis()->FindBin(eta);
             sf  = TauID_SF_eta_DeepTau2017v2p1VSe_UL2017_hist->GetBinContent(bin);
             err = TauID_SF_eta_DeepTau2017v2p1VSe_UL2017_hist->GetBinError(bin);
@@ -1103,17 +923,7 @@ RVec<RVec<float>> getTauSF(float SelectedTau_pt, float SelectedTau_eta, int Sele
 
         //vs Mu
         id = "DeepTau2017v2p1VSmu";
-        //TString path_mu =  TString(remote_storage) + TString("data/tauSF/TauID_SF_eta_") + TString(id) + TString("_") + TString(year)  + TString("ReReco")+ TString(".root");
-        //TFile *f_mu = new TFile(path_mu);
-        //TFile *f_mu = TFile::Open(path_mu);
-        //TFile *f_mu = TauID_SF_eta_DeepTau2017v2p1VSmu_2017ReReco;
-        //else if (year == "2018") TFile *f_mu = TauID_SF_eta_DeepTau2017v2p1VSmu_2018ReReco
-        //TString histoname_mu = TString(vsMuwp);
-        //TH1F * hist_mu = (TH1F *) f_mu->Get(histoname_mu);
         if (SelectedTau_genPartFlav == 2 || SelectedTau_genPartFlav == 4){
-            //bin = hist_mu->GetXaxis()->FindBin(eta);
-            //sf  = hist_mu->GetBinContent(bin);
-            //err = hist_mu->GetBinError(bin);
             bin = TauID_SF_eta_DeepTau2017v2p1VSmu_UL2017_hist->GetXaxis()->FindBin(eta);
             sf  = TauID_SF_eta_DeepTau2017v2p1VSmu_UL2017_hist->GetBinContent(bin);
             err = TauID_SF_eta_DeepTau2017v2p1VSmu_UL2017_hist->GetBinError(bin);
@@ -1136,73 +946,7 @@ RVec<RVec<float>> getTauSF(float SelectedTau_pt, float SelectedTau_eta, int Sele
     return result;
 }
 
-/*
-RVec<float> getTES(float SelectedTau_pt, int SelectedTau_decayMode, int SelectedTau_genPartFlav, bool IsMC, string year){
-    //cout<<"acscsascno"<<endl;
-    //string year = "2017";
-    string id = "DeepTau2017v2p1VSjet";
-    
-    float pt_low  = 34;
-    float pt_high = 170;
-    
-    //TString path_low = TString(remote_storage) + TString("data/tauSF/TauES_dm_") + TString(id) + TString("_") + TString(year) + TString("ReReco") + TString(".root");
-    //TString path_high = TString(remote_storage) + TString("data/tauSF/TauES_dm_") + TString(id) + TString("_") + TString(year) + TString("ReReco") + TString("_ptgt100.root");
-    RVec<float> result(3);
-    if(IsMC == false){
-        //cout<<"babba"<<endl;
-        result[0] = 1.;
-        result[1] = 1.;
-        result[2] = 1.;
-    }
-    else if((SelectedTau_decayMode == 0 || SelectedTau_decayMode == 1 || SelectedTau_decayMode == 10 || SelectedTau_decayMode == 11) && SelectedTau_genPartFlav == 5){ 
-        //TFile *infile_low = TauES_dm_DeepTau2017v2p1VSjet_2017ReReco;
-        //else if (year =="2018") TFile *infile_low = TauES_dm_DeepTau2017v2p1VSjet_2018ReReco;
-        //TFile *infile_high = TauES_dm_DeepTau2017v2p1VSjet_2017ReReco_ptgt100;
-        //else if (year =="2018") TFile *infile_low = TauES_dm_DeepTau2018v2p1VSjet_2018ReReco_ptgt100;        
-        //TH1F * hist_low = (TH1F *) infile_low->Get("tes");
-        //TH1F * hist_high = (TH1F *) infile_high->Get("tes");
-        //int bin = hist_low->GetXaxis()->FindBin(SelectedTau_decayMode);
-        //float tes = hist_low->GetBinContent(bin);
-        //cout<<"ciarro"<<endl;
-        int bin = TauES_dm_DeepTau2017v2p1VSjet_UL2017_hist_low->GetXaxis()->FindBin(SelectedTau_decayMode);
-        float tes = TauES_dm_DeepTau2017v2p1VSjet_UL2017_hist_low->GetBinContent(bin);
-        float err;
-        if (SelectedTau_pt > pt_high){
-            //cout<<"a"<<endl;
-            //int bin_high = hist_high->GetXaxis()->FindBin(SelectedTau_decayMode);
-            //float err = hist_high->GetBinError(bin_high);
-            int bin_high = TauES_dm_DeepTau2017v2p1VSjet_UL2017_ptgt100_hist_high->GetXaxis()->FindBin(SelectedTau_decayMode);
-            //float err = TauES_dm_DeepTau2017v2p1VSjet_2017ReReco_ptgt100_hist_high->GetBinError(bin_high);
-            err = TauES_dm_DeepTau2017v2p1VSjet_UL2017_ptgt100_hist_high->GetBinError(bin_high);
-        }
-        else if (SelectedTau_pt > pt_low){
-            //int bin_high = hist_high->GetXaxis()->FindBin(SelectedTau_decayMode);
-            //float err_high = hist_high->GetBinError(bin_high);
-            //float err_low  = hist_low->GetBinError(bin);
-            //cout<<"b"<<endl;
-            int bin_high = TauES_dm_DeepTau2017v2p1VSjet_UL2017_ptgt100_hist_high->GetXaxis()->FindBin(SelectedTau_decayMode);
-            float err_high = TauES_dm_DeepTau2017v2p1VSjet_UL2017_ptgt100_hist_high->GetBinError(bin_high);
-            float err_low  = TauES_dm_DeepTau2017v2p1VSjet_UL2017_hist_low->GetBinError(bin);
-            //float err      = err_low + (err_high-err_low)/(pt_high-pt_low)*(SelectedTau_pt-pt_low);
-            err      = err_low + (err_high-err_low)/(pt_high-pt_low)*(SelectedTau_pt-pt_low);
-        }
-        //else err = hist_low->GetBinError(bin);
-        else err = TauES_dm_DeepTau2017v2p1VSjet_UL2017_hist_low->GetBinError(bin);
-        
-        result[0] = tes-err;
-        result[1] = tes;
-        result[2] = tes+err;
-    }
-    else{
-        //cout<<"d"<<endl;
-        result[0] = 1.;
-        result[1] = 1.;
-        result[2] = 1.;
-    }
-    //cout<<"oiknionono"<<endl;
-    return result;
-}
-*/
+
 RVec<float> getTES(rvec_f Tau_pt, rvec_i Tau_decayMode, const RVec<UChar_t> &Tau_genPartFlav, bool IsMC, string year){
     string id = "DeepTau2017v2p1VSjet";
     
@@ -1256,53 +1000,7 @@ RVec<float> getTES(rvec_f Tau_pt, rvec_i Tau_decayMode, const RVec<UChar_t> &Tau
     return result_all;
 }
 
-/*
-RVec<float> getFES(float SelectedTau_eta, int SelectedTau_decayMode, int SelectedTau_genPartFlav, bool IsMC, string year){
 
-    //string year = "2017";
-    string id = "DeepTau2017v2p1VSe";
-    
-    //TString path = TString(remote_storage) + TString("data/tauSF/TauFES_eta-dm_") + TString(id) + TString("_") + TString(year) + TString("ReReco") + TString(".root");
-    RVec<float> result(3);
-    if(IsMC == false){
-        result[0] = 1.;
-        result[1] = 1.;
-        result[2] = 1.;
-    }
-    else if((SelectedTau_decayMode == 0 || SelectedTau_decayMode == 1) && (SelectedTau_genPartFlav == 1 || SelectedTau_genPartFlav == 3)){ 
-        //TFile *infile = new TFile(path);
-        //TFile *infile = TFile::Open(path);
-        //TFile *infile = TauFES_eta_dm_DeepTau2017v2p1VSe_2017ReReco;
-        //else if(year =="2018") infile = TauFES_eta-dm_DeepTau2017v2p1VSe_2018ReReco;
-        //TGraphAsymmErrors * graph = (TGraphAsymmErrors *) infile->Get("fes");
-        
-        //float y = graph->GetY()[SelectedTau_decayMode];
-        //float yup  = graph->GetErrorYhigh(SelectedTau_decayMode);
-        //float ylow = graph->GetErrorYlow(SelectedTau_decayMode);
-        
-        //float y = TauFES_eta_dm_DeepTau2017v2p1VSe_2017ReReco_graph->GetY()[SelectedTau_decayMode];
-        //float yup  = TauFES_eta_dm_DeepTau2017v2p1VSe_2017ReReco_graph->GetErrorYhigh(SelectedTau_decayMode);
-        //float ylow = TauFES_eta_dm_DeepTau2017v2p1VSe_2017ReReco_graph->GetErrorYlow(SelectedTau_decayMode);
-        
-        int endcap_index_shift = 0;
-        if(abs(SelectedTau_eta) >= 1.5) endcap_index_shift = 2;
-        
-        float y = TauFES_eta_dm_DeepTau2017v2p1VSe_UL2017_graph->GetY()[SelectedTau_decayMode + endcap_index_shift];
-        float yup  = TauFES_eta_dm_DeepTau2017v2p1VSe_UL2017_graph->GetErrorYhigh(SelectedTau_decayMode + endcap_index_shift);
-        float ylow = TauFES_eta_dm_DeepTau2017v2p1VSe_UL2017_graph->GetErrorYlow(SelectedTau_decayMode + endcap_index_shift);
-        
-        result[0] = y-ylow;
-        result[1] = y;
-        result[2] = y + yup;
-    }
-    else{
-        result[0] = 1.;
-        result[1] = 1.;
-        result[2] = 1.;
-    }
-    return result;
-}
-*/
 
 RVec<float> getFES(rvec_f Tau_eta, rvec_i Tau_decayMode, rvec_i Tau_genPartFlav, bool IsMC, string year){
     RVec<float> result_all;
@@ -1404,16 +1102,6 @@ RVec<float> btagcalc(rvec_i GoodJets_idx, rvec_f Jet_pt, rvec_f Jet_eta, rvec_i 
     float p_data_btagDown = 1.;
     float p_data_mistagUp = 1.;
     float p_data_mistagDown = 1.;
-    
-    //map<string, float> WPbtagger = {
-    //    {"DeepFlv_T", 0.7264}, 
-    //    {"DeepFlv_M", 0.2770}, 
-    //    {"DeepFlv_L", 0.0494}, 
-    //    {"DeepCSV_T", 0.7527}, 
-    //    {"DeepCSV_M", 0.4184}, 
-    //    {"DeepCSV_L", 0.1241}
-    //};
-
 
     for (size_t i = 0; i < GoodJets_idx.size(); i++) {
         int j = GoodJets_idx[i];
@@ -2002,13 +1690,6 @@ float getNevents(int Sample, bool IsMC){
 }
 
 
-///// old
-////questa è vecchia TMVA::Experimental::RBDT<> bdt("SMxgb", "https://ttedesch.web.cern.ch/ttedesch/SMxgb.root");
-//TMVA::Experimental::RBDT<> bdt("xgb_SM_v100", "https://ttedesch.web.cern.ch/ttedesch/VBS_ML_v4/xgb_SM_v100.root");
-//float SMinference(float m_jj, float m_jjtaulep, float m_taulep, float mT_lep_MET, float leadjet_pt, float subleadjet_pt, float tau_mass, float MET_pt){
-//    auto y1 = bdt.Compute({m_jj, m_jjtaulep, m_taulep, mT_lep_MET, leadjet_pt, subleadjet_pt, tau_mass, MET_pt});
-//    return y1[0];
-//}
 float taujet_RelPt(int selectedtau_jetIdx, float selectedtau_pt, rvec_f Jet_pt){
     if (selectedtau_jetIdx == -1) return -999.;
     else return Jet_pt[selectedtau_jetIdx]/selectedtau_pt;
@@ -2019,61 +1700,6 @@ float taujet_deltaPhi(int selectedtau_jetIdx, float selectedtau_phi, rvec_f Jet_
     else return deltaPhi(selectedtau_phi, Jet_phi[selectedtau_jetIdx]);
 }
 
-//to_keep = ['leadjet_DeepFlv_b', 'subleadjet_DeepFlv_b', 'event_Zeppenfeld_over_deltaEta_jj', 'taujet_relpt', 'm_o1', 'event_RT', 'taujet_deltaPhi', 'nJets', 'mT_lep_MET', 'm_jjtau', 'm_1T', 'nBJets', 'subleadjet_pt', 'm_jjtaulep', 'm_jj', 'leadjet_pt']
-//TMVA::Experimental::RBDT<> bdt("xgb_SM_v100", "https://ttedesch.web.cern.ch/ttedesch/VBS_ML_v4/optimized_model_SM_clean.root");
-TMVA::Experimental::RBDT<> bdt("xgb_SM_v100", "https://vbs-pg-support.web.cern.ch/models/optimized_model_SM_clean.root");
-
-float SMinference(float leadjet_DeepFlv_b, float subleadjet_DeepFlv_b, float event_Zeppenfeld_over_deltaEta_jj, float taujet_relpt, float m_o1, float event_RT, float taujet_deltaPhi, float nJets, float mT_lep_MET, float m_jjtau, float m_1T, float nBJets, float subleadjet_pt, float m_jjtaulep, float m_jj, float leadjet_pt){
-    auto y1 = bdt.Compute({leadjet_DeepFlv_b, subleadjet_DeepFlv_b, event_Zeppenfeld_over_deltaEta_jj, taujet_relpt, m_o1, event_RT, taujet_deltaPhi, nJets, mT_lep_MET, m_jjtau, m_1T, nBJets, subleadjet_pt, m_jjtaulep, m_jj, leadjet_pt});
-    return y1[0];
-}
-
-/*
-R__LOAD_LIBRARY(/usr/local/lib/libtensorflow.so)
-#include "cppflow/ops.h"
-#include "cppflow/model.h"
-cppflow::model model("./dnn_optimized_model_tagger_mjjabsdeltaetajj");
-
-    
-
-float DNNinference(float x1, float x2, float x3, float x4, float x5, float x6, float x7, float x8, float x9, float x10, float x11, float x12, float x13, float x14, float x15, float x16, float x17, float x18, float x19, float x20, float x21, float x22, float x23, float x24, float x25, float x26, float x27, float x28){
-    auto input = cppflow::fill({1, 28}, 1.0f);
-    auto output = model(input);
-    auto values = output.get_data<float>();
-    return values[0];
-}
-*/
-/*
-float DNNinference(float x1, float x2, float x3, float x4, float x5, float x6, float x7, float x8, float x9, float x10, float x11, float x12, float x13, float x14, float x15, float x16, float x17, float x18, float x19, float x20){
-     TMVA::Reader *reader = new TMVA::Reader();
-    Float_t var1, var2, var3, var4;
-    reader->AddVariable( "var1", &x1 );
-    reader->AddVariable( "var2", &x2 );
-    reader->AddVariable( "var3", &x3 );
-    reader->AddVariable( "var4", &x4 );
-    reader->AddVariable( "var5", &x5 );
-    reader->AddVariable( "var6", &x6 );
-    reader->AddVariable( "var7", &x7 );
-    reader->AddVariable( "var8", &x8 );
-    reader->AddVariable( "var9", &x9 );
-    reader->AddVariable( "var10", &x10 );
-    reader->AddVariable( "var11", &x11 );
-    reader->AddVariable( "var12", &x12 );
-    reader->AddVariable( "var13", &x13 );
-    reader->AddVariable( "var14", &x14 );
-    reader->AddVariable( "var15", &x15 );
-    reader->AddVariable( "var16", &x16 );
-    reader->AddVariable( "var17", &x17 );
-    reader->AddVariable( "var18", &x18 );
-    reader->AddVariable( "var19", &x19 );
-    reader->AddVariable( "var20", &x20 );
-    
-    reader->BookMVA('PyKeras', TString('dataset/weights/TMVAClassification_PyKeras.weights.xml'))
-        
-    auto y1 = bdt.Compute({m_jj, m_jjtaulep, m_taulep, mT_lep_MET, leadjet_pt, subleadjet_pt, tau_mass, MET_pt});
-    return y1[0];
-}
-*/
 
 RVec<int> GetGenMatched(rvec_i Jet_genJetIdx, rvec_i GenJet_idx){
     RVec<int> GenMatched_idx(2);
@@ -2095,225 +1721,7 @@ bool DataLeptonCheck(int SampleFlag, int GoodLeptonFamily, bool isMC){
     return true;
 }
 
-//### placeholder to determinate which strategy to be used to implement PDF uncertainty ###
-//try:
-//    pdftitle = chain.GetBranch("LHEPdfWeight").GetTitle()
-//except:
-//    isPDFHessian = False
-//    pass
-//else:
-//    if pdftitle != "":
-//        firstpdf = pdftitle.split(" ")[-3]
-//        lastpdf = pdftitle.split(" ")[-1]
-//        isPDFHessian = IsPdfHessian(firstpdf, lastpdf)
-//    else:
-//        isPDFHessian = False
 
-//print("isPDFHessian", isPDFHessian)
-
-//def IsPdfHessian(firstpdf, lastpdf):
-//    pdfcsv = open("data/lhapdf.csv")
-//    reader = csv.reader(pdfcsv)
-//    pdfdict = {rows[0]:rows[1] for rows in reader}
-//    namepdf = pdfdict[str(firstpdf)]
-//    if "hess" in namepdf:
-//        return True
-//    else:
-//        return False
-
-
-/*OLD -> ERRORS ?
-unordered_map<int,bool> IsPdfHessian({
- { 25 , true },
-{ 26 , true },
-{ 18 , true },
-{ 19 , true },
-{ 20 , true },
-{ 21 , true },
-{ 22 , true },
-{ 23 , true },
-{ 28 , false },
-{ 50 , true },
-{ 51 , true },
-{ 52 , true },
-{ 53 , true },
-{ 54 , true },
-{ 15 , true },
-{ 67 , true },
-{ 28 , false },
-{ 29 , false },
-{ 30 , false },
-{ 31 , false },
-{ 32 , false },
-{ 33 , false },
-{ 34 , false },
-{ 35 , false },
-{ 36 , false },
-{ 37 , false },
-{ 38 , true },
-{ 40 , false },
-{ 42 , true },
-{ 43 , true },
-{ 44 , true },
-{ 45 , true },
-{ 46 , true },
-{ 47 , true },
-{ 1 , false },
-{ 2 , false },
-{ 11 , false },
-{ 4 , false },
-{ 5 , false },
-{ 6 , false },
-{ 8 , false },
-{ 3 , false },
-{ 7 , false },
-{ 10 , false },
-{ 71 , true },
-{ 72 , true },
-{ 73 , true },
-{ 110 , true },
-{ 111 , true },
-{ 103 , true },
-{ 104 , true },
-{ 105 , true },
-{ 106 , true },
-{ 107 , true },
-{ 108 , true },
-{ 113 , false },
-{ 134 , true },
-{ 135 , true },
-{ 136 , true },
-{ 137 , true },
-{ 138 , true },
-{ 100 , true },
-{ 151 , true },
-{ 113 , false },
-{ 114 , false },
-{ 115 , false },
-{ 116 , false },
-{ 117 , false },
-{ 118 , false },
-{ 119 , false },
-{ 120 , false },
-{ 121 , false },
-{ 122 , false },
-{ 123 , true },
-{ 125 , false },
-{ 127 , true },
-{ 128 , true },
-{ 129 , true },
-{ 130 , true },
-{ 131 , true },
-{ 132 , true },
-{ 86 , false },
-{ 87 , false },
-{ 96 , false },
-{ 89 , false },
-{ 90 , false },
-{ 91 , false },
-{ 93 , false },
-{ 88 , false },
-{ 92 , false },
-{ 95 , false },
-{ 155 , true },
-{ 156 , true },
-{ 157 , true },
-{ 194 , true },
-{ 195 , true },
-{ 187 , true },
-{ 188 , true },
-{ 189 , true },
-{ 190 , true },
-{ 191 , true },
-{ 192 , true },
-{ 197 , false },
-{ 219 , true },
-{ 220 , true },
-{ 221 , true },
-{ 222 , true },
-{ 223 , true },
-{ 184 , true },
-{ 236 , true },
-{ 197 , false },
-{ 198 , false },
-{ 199 , false },
-{ 200 , false },
-{ 201 , false },
-{ 202 , false },
-{ 203 , false },
-{ 204 , false },
-{ 205 , false },
-{ 206 , false },
-{ 207 , true },
-{ 209 , false },
-{ 211 , true },
-{ 212 , true },
-{ 213 , true },
-{ 214 , true },
-{ 215 , true },
-{ 216 , true },
-{ 170 , false },
-{ 171 , false },
-{ 180 , false },
-{ 173 , false },
-{ 174 , false },
-{ 175 , false },
-{ 177 , false },
-{ 172 , false },
-{ 176 , false },
-{ 179 , false },
-{ 240 , true },
-{ 241 , true },
-{ 242 , true },
-{ 279 , true },
-{ 280 , true },
-{ 272 , true },
-{ 273 , true },
-{ 274 , true },
-{ 275 , true },
-{ 276 , true },
-{ 277 , true },
-{ 282 , false },
-{ 304 , true },
-{ 305 , true },
-{ 306 , true },
-{ 307 , true },
-{ 308 , true },
-{ 269 , true },
-{ 321 , true },
-{ 282 , false },
-{ 283 , false },
-{ 284 , false },
-{ 285 , false },
-{ 286 , false },
-{ 287 , false },
-{ 288 , false },
-{ 289 , false },
-{ 290 , false },
-{ 291 , false },
-{ 292 , true },
-{ 294 , false },
-{ 296 , true },
-{ 297 , true },
-{ 298 , true },
-{ 299 , true },
-{ 300 , true },
-{ 301 , true },
-{ 255 , false },
-{ 256 , false },
-{ 265 , false },
-{ 258 , false },
-{ 259 , false },
-{ 260 , false },
-{ 262 , false },
-{ 257 , false },
-{ 261 , false },
-{ 264 , false },
-{ 325 , true },
-{ 326 , true },
-{ 327 , true }
-});
-*/
 
 unordered_map<int,bool> IsPdfHessian({
 { 194 , true},
@@ -2470,64 +1878,7 @@ float sc(float input, int c){
       return ret;
 }
 
-/*
-R__LOAD_LIBRARY(/usr/local/lib/libtensorflow.so)
-#include "cppflow/ops.h"
-#include "cppflow/model.h"
-cppflow::model VBSTagger_DNN_model("./dnn_optimized_model_tagger_mjjabsdeltaetajj");
-// C Library for dynamic linking
-#include  <dlfcn.h>
-// Define the type for generic machine learning functions
-typedef float *(*mlfunc)(float *, const float*);
 
-
-
-RVec<size_t> SelectVBSJets_tagger_mjj_absdeltaetajj_DNN(rvec_f pt, rvec_f eta, rvec_f phi, rvec_f mass, rvec_f Jet_area, rvec_f Jet_chHEF, rvec_f Jet_muEF, rvec_f Jet_neEmEF, rvec_f Jet_neHEF, rvec_f Jet_jetId, rvec_f Jet_nConstituents, rvec_f Jet_nElectrons, rvec_f Jet_nMuons, rvec_i GoodJets_idx)
-{
-
-    RVec<size_t> idx;
-    // Find first lepton pair with invariant mass closest to Z mass
-    auto idx_cmb = Combinations(GoodJets_idx, 2);
-    float best_score = -1.;
-    size_t best_i1 = 0; size_t best_i2 = 0;
-    for (size_t i = 0; i < idx_cmb[0].size(); i++) {
-        const auto i1 = idx_cmb[0][i];
-        const auto i2 = idx_cmb[1][i];
-        //std::cout<<GoodJets_idx[i1]<<GoodJets_idx[i2]<<endl;
-        ROOT::Math::PtEtaPhiMVector p1(pt[GoodJets_idx[i1]], eta[GoodJets_idx[i1]], phi[GoodJets_idx[i1]], mass[GoodJets_idx[i1]]);
-        ROOT::Math::PtEtaPhiMVector p2(pt[GoodJets_idx[i2]], eta[GoodJets_idx[i2]], phi[GoodJets_idx[i2]], mass[GoodJets_idx[i2]]);
-        const float this_mass = (p1 + p2).M();
-        if (abs(eta[GoodJets_idx[i1]] - eta[GoodJets_idx[i2]]) >= DELTAETA_JJ_CUT && (p1 + p2).M() > 500) {
-            void *handle = dlopen ( "./deployed_scaler_tagger_mjjabsdeltaetajj.so", RTLD_LAZY );
-            if (!handle) exit(1);
-            mlfunc minmax_ = mlfunc(dlsym (handle, "MinMaxScaler_tagger_mjjabsdeltaetajj")); 
-            float input_not_scaled [] = {pt[GoodJets_idx[i1]], eta[GoodJets_idx[i1]], phi[GoodJets_idx[i1]], mass[GoodJets_idx[i1]], Jet_area[GoodJets_idx[i1]], Jet_chHEF[GoodJets_idx[i1]], Jet_muEF[GoodJets_idx[i1]], Jet_neEmEF[GoodJets_idx[i1]], Jet_neHEF[GoodJets_idx[i1]], Jet_jetId[GoodJets_idx[i1]], Jet_nConstituents[GoodJets_idx[i1]], Jet_nElectrons[GoodJets_idx[i1]], Jet_nMuons[GoodJets_idx[i1]], pt[GoodJets_idx[i2]], eta[GoodJets_idx[i2]], phi[GoodJets_idx[i2]], mass[GoodJets_idx[i2]], Jet_area[GoodJets_idx[i2]], Jet_chHEF[GoodJets_idx[i2]], Jet_muEF[GoodJets_idx[i2]], Jet_neEmEF[GoodJets_idx[i2]], Jet_neHEF[GoodJets_idx[i2]], Jet_jetId[GoodJets_idx[i2]], Jet_nConstituents[GoodJets_idx[i2]], Jet_nElectrons[GoodJets_idx[i2]], Jet_nMuons[GoodJets_idx[i2]], abs(eta[GoodJets_idx[i1]] - eta[GoodJets_idx[i2]]),  this_mass};
-            float input_scaled [28];
-            minmax_(input_scaled, input_not_scaled);            
-            auto input_scaled_list = {input_scaled[0],input_scaled[1],input_scaled[2],input_scaled[3],input_scaled[4],input_scaled[5],input_scaled[6],input_scaled[7],input_scaled[8],input_scaled[9],input_scaled[10],input_scaled[11],input_scaled[12],input_scaled[13],input_scaled[14],input_scaled[15],input_scaled[16],input_scaled[17],input_scaled[18],input_scaled[19],input_scaled[20],input_scaled[21],input_scaled[22],input_scaled[23],input_scaled[24],input_scaled[25], input_scaled[26],input_scaled[27]};
-            auto input = cppflow::tensor(input_scaled_list);
-            input = cppflow::expand_dims(input, 0);
-            auto output = VBSTagger_DNN_model(input);
-            auto values = output.get_data<float>();
-            float this_score = values[0];
-            //cout<<"this score: "<<this_score<<endl;
-            //cout<<"best score: "<<best_score<<endl;
-            //cout<<endl;
-            if (this_score > best_score) {
-                best_score = this_score;
-                best_i1 = GoodJets_idx[i1];
-                best_i2 = GoodJets_idx[i2];
-            }
-        }
-    } 
-    //cout<<"best score of the event: "<<best_score<<endl;
-    //cout<<endl;
-    //cout<<endl;
-    idx.emplace_back(best_i1);
-    idx.emplace_back(best_i2);
-    return idx;
-}
-*/
 
 float get_ptrel(float jet_pt, float jet_eta, float jet_phi, float jet_mass, float lepton_pt, float lepton_eta, float lepton_phi, float lepton_mass){
     //ROOT::Math::PtEtaPhiMVector jet_p4(jet_pt, jet_eta, jet_phi, jet_mass);
